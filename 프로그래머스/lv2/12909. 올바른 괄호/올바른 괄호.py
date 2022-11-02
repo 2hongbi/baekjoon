@@ -9,6 +9,4 @@ def solution(s):
             elif stack[-2] == '(':
                 stack.pop(-2)
                 stack.pop(-1)
-    if len(stack) == 0:
-        return True
-    return False
+    return len(stack) == 0
