@@ -1,16 +1,15 @@
-def LRR(num):
-    # Linear Recurrence Relations
-    if num == 1:
-        return 1
-    elif num == 2:
-        return 2
-    elif num == 3:
-        return 4
-    else:
-        return LRR(num - 1) + LRR(num - 2) + LRR(num - 3)
+import sys
 
+input = sys.stdin.readline
+
+ans = [0] * 11  # 입력받은 정수는 11 미만이므로
+ans[1] = 1
+ans[2] = 2
+ans[3] = 4
+
+for i in range(4, 11):
+    ans[i] = sum(ans[i-3:i])
 
 T = int(input())
 for _ in range(T):
-    n = int(input())
-    print(LRR(n))
+    print(ans[int(input())])
