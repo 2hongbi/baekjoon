@@ -1,10 +1,7 @@
 def solution(array):
-    count = list(set(array))
-    ans = [array.count(c) for c in count]
-    
-    if ans.count(max(ans)) == 1:
-        idx = ans.index(max(ans))
-        return count[idx]
-    else:
-        return -1
-    
+    while len(array) != 0:
+        for i, a in enumerate(set(array)):
+            array.remove(a)
+        if i == 0:
+            return a
+    return -1
