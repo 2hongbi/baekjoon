@@ -6,5 +6,3 @@ def solution(common):
     else:
         gongbi = seq[1] // seq[0]
         return common[0] * (gongbi ** len(common))
-    answer = 0
-    return answer
