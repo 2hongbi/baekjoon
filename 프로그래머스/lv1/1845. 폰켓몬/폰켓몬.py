@@ -1,2 +1,8 @@
 def solution(nums):
-    return len(nums) // 2 if len(set(nums)) > len(nums) // 2 else len(set(nums))
+    num = len(nums) // 2
+    kind = set(nums)
+    
+    if len(kind) > num:
+        return num
+    else:
+        return len(kind)
