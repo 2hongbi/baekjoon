@@ -1,6 +1,8 @@
 def solution(genres, plays):
     answer = []
     
+    # dic1은 idx, play 횟수
+    # dic2는 각 장르별 총 횟수
     dic1, dic2 = {}, {}
     
     for i, (g, p) in enumerate(zip(genres, plays)):
@@ -13,7 +15,7 @@ def solution(genres, plays):
             dic2[g] = p
         else:
             dic2[g] += p
-            
+    
     for (k, v) in sorted(dic2.items(), key=lambda x:x[1], reverse=True):
         for (i, p) in sorted(dic1[k], key=lambda x:x[1], reverse=True)[:2]:
             answer.append(i)
