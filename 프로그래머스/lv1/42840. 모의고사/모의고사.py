@@ -1,20 +1,22 @@
 def solution(answers):
-    pat1 = [1, 2, 3, 4, 5]
-    pat2 = [2, 1, 2, 3, 2, 4, 2, 5]
-    pat3 = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
-    score = [0, 0, 0]
     answer = []
+    score = [0, 0, 0]
 
+    student1 = [1, 2, 3, 4, 5]
+    student2 = [2, 1, 2, 3, 2, 4, 2, 5]
+    student3 = [3, 3, 1, 1, 2, 2, 4, 4, 5, 5]
+    
     for idx, ans in enumerate(answers):
-        if ans == pat1[idx % len(pat1)]:
+        if ans == student1[idx % len(student1)]:
             score[0] += 1
-        if ans == pat2[idx % len(pat2)]:
+        if ans == student2[idx % len(student2)]:
             score[1] += 1
-        if ans == pat3[idx % len(pat3)]:
+        if ans == student3[idx % len(student3)]:
             score[2] += 1
-
-    for idx, s in enumerate(score):
-        if s == max(score):
-            answer.append(idx + 1)
-
+        
+    max_score = max(score)
+    for i in range(len(score)):
+        if score[i] == max_score:
+            answer.append(i + 1)
+    
     return answer
