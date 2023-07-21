@@ -1,0 +1,12 @@
+def solution(sizes):
+    # 시간 복잡도는 O(n)
+    # width가 height보다 무조건 길다고 가정하자
+    width = []
+    height = []
+    
+    for x, y in sizes:
+        width.append(max(x, y))
+        height.append(min(x, y))
+    
+    return max(width) * max(height)
+    
