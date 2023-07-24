@@ -1,5 +1,4 @@
 def solution(answers):
-    answer = []
     scores = [0, 0, 0]
 
     student1 = [1, 2, 3, 4, 5]
@@ -16,5 +15,6 @@ def solution(answers):
         
     max_score = max(scores)
     answer = [idx + 1 for idx, score in enumerate(scores) if score == max_score] 
+    
     
     return answer
