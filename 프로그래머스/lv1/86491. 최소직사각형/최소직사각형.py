@@ -5,8 +5,11 @@ def solution(sizes):
     height = []
     
     for x, y in sizes:
-        width.append(max(x, y))
-        height.append(min(x, y))
+        if x < y:
+            x, y = y, x
+        
+        width.append(x)
+        height.append(y)
     
     return max(width) * max(height)
     
