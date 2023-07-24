@@ -1,9 +1,9 @@
 import math
-from itertools import combinations, permutations
+from itertools import permutations
 
 
 def is_prime_number(x):
-    for i in range(2, int(math.sqrt(x)) + 1):
+    for i in range(2, int(math.sqrt(x)) + 1):   # int(max(num) ** 0.5) + 1
         if x % i == 0:
             return False
     return True
