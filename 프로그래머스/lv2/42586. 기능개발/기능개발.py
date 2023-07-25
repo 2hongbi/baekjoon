@@ -1,17 +1,20 @@
 def solution(progresses, speeds):
     answer = []
-    days = 0 
-    cnt = 0 
+    
+    days, count = 0, 0
     while len(progresses) > 0:
-        if (progresses[0] + days * speeds[0]) >= 100:
+        progress, speed = progresses[0], speeds[0]
+    
+        if progress + (days * speed) >= 100:
             progresses.pop(0)
             speeds.pop(0)
-            cnt += 1
+            count += 1
         else:
-            if cnt > 0:
-                answer.append(cnt)
-                cnt = 0
-            else:
-                days += 1
-    answer.append(cnt)
+            if count > 0:
+                answer.append(count)
+                count = 0
+            days += 1
+            
+    answer.append(count)
+    
     return answer
