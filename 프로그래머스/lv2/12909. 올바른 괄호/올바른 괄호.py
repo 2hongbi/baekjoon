@@ -1,6 +1,6 @@
 def solution(s):
     stack = []
-    s = list(s)
+    
     for i in s:
         stack.append(i)
         if i == ')':
