@@ -1,9 +1,14 @@
+def collatz(n, answer):
+    if n == 1:
+        return answer
+    if answer == 500:
+        return -1
+    
+    if n % 2 == 0:
+        return collatz(n // 2, answer + 1)
+    else:
+        return collatz(n * 3 + 1, answer + 1)
+
+
 def solution(num):
-    for i in range(500):
-        if num == 1:
-            return i
-        if num % 2 == 0:
-            num = num // 2
-        else:
-            num = num * 3 + 1
-    return -1
+    return collatz(num, 0)
