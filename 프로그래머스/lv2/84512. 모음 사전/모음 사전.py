@@ -1,11 +1,18 @@
-from itertools import product
-
+def find(data, p, step):
+    if step == 6:
+        return
+    if p != '':
+        data.append(p)
+        
+    for c in ['A', 'E', 'I', 'O', 'U']:
+        find(data, ''.join([p, c]), step + 1)
+        
 def solution(word):
-    words = []
-    
-    for i in range(1, 6):
-        for comb in product('AEIOU', repeat=i):
-            words.append(''.join(list(comb)))
-    
-    words.sort()
-    return words.index(word) + 1
+    answer = 0
+    data = []
+    find(data, '', 0)
+    for i in range(len(data)):
+        if data[i] == word:
+            answer = i + 1
+            break
+    return answer
