@@ -1,25 +1,27 @@
-import math
 from itertools import permutations
 
 
-def is_prime_number(x):
-    for i in range(2, int(math.sqrt(x)) + 1):   # int(max(num) ** 0.5) + 1
-        if x % i == 0:
+def check_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, int(n ** 0.5) + 1):
+        if n % i == 0:
             return False
     return True
 
 
 def solution(numbers):
+    answer = []
+    numbers = list(numbers)
+    # prime = primes(10 ** len(numbers) - 1)
+    num = []
     
-    permu = []
     for i in range(1, len(numbers) + 1):
-        permu.extend(list(permutations(list(numbers), i)))
+        num.append(list(permutations(numbers, i)))
+    num = [int(''.join(y)) for x in num for y in x]
+    
+    for i in num:
+        if check_prime(i):
+            answer.append(i)
         
-    permu = list(set(permu))
-    ans = []
-    for p in permu:
-        temp = int(''.join(p))
-        if temp > 1 and is_prime_number(temp):
-            ans.append(temp)
-            
-    return len(set(ans))
+    return len(set(answer))
