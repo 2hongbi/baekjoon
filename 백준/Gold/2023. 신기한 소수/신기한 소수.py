@@ -1,4 +1,3 @@
-import math
 import sys
 sys.setrecursionlimit(10000)
 input = sys.stdin.readline
@@ -8,7 +7,7 @@ n = int(input())
 def is_prime(x):
     if x == 1:
         return False
-    for i in range(2, int(math.sqrt(x)) + 1):
+    for i in range(2, int(x ** 0.5) + 1):
         if x % i == 0:
             return False
     return True
