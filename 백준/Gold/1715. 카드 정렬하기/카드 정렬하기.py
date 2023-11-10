@@ -4,16 +4,13 @@ n = int(input())
 pq = PriorityQueue()
 
 for _ in range(n):
-    date = int(input())
-    pq.put(date)
+    pq.put(int(input()))
 
-data1 = 0
-data2 = 0
+data1, data2 = 0, 0
 sum = 0
 
 while pq.qsize() > 1:
-    data1 = pq.get()
-    data2 = pq.get()
+    data1, data2 = pq.get(), pq.get()
     temp = data1 + data2
     sum += temp
     pq.put(temp)
