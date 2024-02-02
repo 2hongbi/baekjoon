@@ -1,43 +1,44 @@
 from collections import deque
 
+n, m, v = map(int, input().split())
 
-N, M, Start = map(int, input().split())  # 노드 개수, 에지 개수, 시작점
-A = [[] for _ in range(N + 1)]
+graph = [[] for _ in range(n + 1)]
 
-for _ in range(M):  # 인접 리스트에 그래프 데이터 저장
-    v, e = map(int, input().split())
-    A[v].append(e)
-    A[e].append(v)
+for _ in range(m):
+    s, e = map(int, input().split())
+    graph[s].append(e)
+    graph[e].append(s)
 
-
-for i in range(N + 1):
-    A[i].sort()  # 번호가 작은 노드부터 방문하기 위해 정렬하기
-
-
-def DFS(v):
-    print(v, end=' ')
-    visited[v] = True
-    for i in A[v]:
-        if not visited[i]:
-            DFS(i)
+# 방문할 수 있는 정점이 여러 개인 경우 정점 번호가 작은 것을 먼저 방문
+for i in range(n + 1):
+    graph[i].sort()
 
 
-visited = [False] * (N + 1)
-DFS(Start)
-
-
-def BFS(v):
-    queue = deque()
-    queue.append(v)
-    visited[v] = True
-    while queue:
-        now_node = queue.popleft()
-        print(now_node, end=' ')
-        for i in A[now_node]:
-            if not visited[i]:
-                visited[i] = True
-                queue.append(i)
+visited = [False] * (n + 1)
+def dfs(node):
+    print(node, end=' ')
+    visited[node] = True
+    for next_node in graph[node]:
+        if not visited[next_node]:
+            dfs(next_node)
+            visited[next_node] = True
+dfs(v)
 
 print()
-visited = [False] * (N + 1)
-BFS(Start)
+
+visited = [False] * (n + 1)
+def bfs(node):
+    queue = deque([node])
+    visited[node] = True
+
+    while queue:
+        curr_node = queue.popleft()
+        print(curr_node, end=' ')
+        visited[curr_node] = True
+
+        for next_node in graph[curr_node]:
+            if not visited[next_node]:
+                queue.append(next_node)
+                visited[next_node] = True
+
+bfs(v)
