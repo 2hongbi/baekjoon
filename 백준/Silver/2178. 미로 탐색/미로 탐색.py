@@ -1,29 +1,35 @@
 from collections import deque
 
-
 n, m = map(int, input().split())
-graph = [list(map(int, input())) for _ in range(n)]
-visited = [[0] * m for _ in range(n)]
-dx, dy = (0, 0, -1, 1), (1, -1, 0, 0)
+grid = [
+    list(map(int, input()))
+    for _ in range(n)
+]
 
+visited = [[False] * m for _ in range(n)]
+
+def in_range(x, y):
+    return 0 <= x < n and 0 <= y < m
+
+def can_go(x, y):
+    if not in_range(x, y):
+        return False
+    if visited[x][y] or grid[x][y] == 0:
+        return False
+    return True
 
 def bfs(x, y):
-    q = deque([(x, y)])
-    visited[x][y] = 1
+    queue = deque([(x, y)])
+    visited[x][y] = True
 
-    while q:
-        x, y = q.popleft()
+    while queue:
+        x, y = queue.popleft()
+        for dx, dy in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
+            nx, ny = x + dx, y + dy
+            if can_go(nx, ny):
+                visited[nx][ny] = True
+                grid[nx][ny] = grid[x][y] + 1
+                queue.append((nx, ny))
 
-        if x == n - 1 and y == m - 1:
-            return visited[n - 1][m - 1]
-
-        for i in range(4):
-            nx, ny = x + dx[i], y + dy[i]
-
-            if 0 <= nx < n and 0 <= ny < m:
-                if graph[nx][ny] == 1 and not visited[nx][ny]:
-                    q.append((nx, ny))
-                    visited[nx][ny] = visited[x][y] + 1
-
-
-print(bfs(0, 0))
+bfs(0, 0)
+print(grid[n - 1][m - 1])
