@@ -1,17 +1,10 @@
 n = int(input())
 
-# 메모이제이션을 위한 리스트 초기화
-memo = [0] * (n + 1)
+def fibonacci(n):
+    dp = [0] * (n+1)  # DP 테이블 초기화
+    dp[1] = 1  # 초기 조건 설정
+    for i in range(2, n+1):
+        dp[i] = dp[i-1] + dp[i-2]  # 점화식에 따라 F(n) 계산
+    return dp[n]
 
-def fibo(x):
-    if x == 0:
-        return 0
-    if x == 1:
-        return 1
-    if memo[x] != 0: # 이미 계산한 값이면 메모 반환
-        return memo[x]
-    memo[x] = fibo(x - 1) + fibo(x - 2)
-    return memo[x]
-
-
-print(fibo(n))
+print(fibonacci(n))
