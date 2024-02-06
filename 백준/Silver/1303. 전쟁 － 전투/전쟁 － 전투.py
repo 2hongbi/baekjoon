@@ -1,15 +1,19 @@
-n, m = map(int, input().split())
+n, m = map(int, input().split()) # 가로, 세로
 battlefield = [input() for _ in range(m)]
 visited = [[False] * n for _ in range(m)]
 
 def dfs(x, y, team):
     if x < 0 or x >= m or y < 0 or y >= n or visited[x][y] or battlefield[x][y] != team:
         return 0
+
     visited[x][y] = True
-    size = 1  # 현재 병사 포함
-    for dx, dy in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
+    size = 1
+
+    for dx, dy in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
         size += dfs(x + dx, y + dy, team)
+
     return size
+
 
 power_w, power_b = 0, 0
 for i in range(m):
