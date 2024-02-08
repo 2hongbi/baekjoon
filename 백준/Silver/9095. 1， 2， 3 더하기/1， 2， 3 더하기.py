@@ -1,15 +1,20 @@
 import sys
-
 input = sys.stdin.readline
 
-ans = [0] * 11  # 입력받은 정수는 11 미만이므로
-ans[1] = 1
-ans[2] = 2
-ans[3] = 4
-
-for i in range(4, 11):
-    ans[i] = sum(ans[i-3:i])
-
 T = int(input())
+
 for _ in range(T):
-    print(ans[int(input())])
+    n = int(input())
+
+    dp = [0] * (n + 1)
+    for i in range(1, n + 1):
+        if i == 1:
+            dp[i] = 1
+        elif i == 2:
+            dp[i] = 2
+        elif i == 3:
+            dp[i] = 4
+        else:
+            dp[i] = dp[i - 1] + dp[i - 2] + dp[i - 3]
+
+    print(dp[n])
