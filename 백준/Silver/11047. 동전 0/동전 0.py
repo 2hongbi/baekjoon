@@ -1,10 +1,11 @@
 n, k = map(int, input().split())
 
 coins = [int(input()) for _ in range(n)]
+coins.sort(reverse=True)
 
-cnt = 0
-for i in coins[::-1]:
-    cnt += k // i
-    k %= i
+answer = 0
+for coin in coins:
+    answer += k // coin
+    k %= coin
 
-print(cnt)
+print(answer)
