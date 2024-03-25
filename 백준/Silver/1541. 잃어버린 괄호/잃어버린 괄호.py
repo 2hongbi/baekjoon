@@ -1,17 +1,12 @@
-nums = list(map(str, input().split('-')))
-
-def calculate_sum(n):
-    result = 0
-    temp = str(n).split('+')
-    for t in temp:
-        result += int(t)
-    return result
+expression = input().split('-')
 
 answer = 0
-for i in range(len(nums)):
-    if i == 0:
-        answer += calculate_sum(nums[i])
-    else:
-        answer -= calculate_sum(nums[i])
+
+for ex in expression[0].split('+'):
+    answer += int(ex)
+
+for i in range(1, len(expression)):
+    for ex in expression[i].split('+'):
+        answer -= int(ex)
 
 print(answer)
