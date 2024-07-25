@@ -1,15 +1,14 @@
-def in_range(x, y, z):
-    return 0 <= x < z and 0 <= y < z
-
-def solution(board, h, w):
-    z = len(board)
-
-    target = board[h][w]
-    dxs, dys = [0, 1, 0, -1], [1, 0, -1, 0]
+def solution(board, h, w):    
+    n = len(board)
+    count = 0
     
-    answer = 0
-    for dx, dy in zip(dxs, dys):
-        nx, ny = h + dx, w + dy
-        if in_range(nx, ny, z) and board[nx][ny] == target:            
-            answer += 1
-    return answer
+    dh, dw = [0, 1, -1, 0], [1, 0, 0, -1]
+    
+    for i in range(4):
+        h_check, w_check = h + dh[i], w + dw[i]
+        
+        if 0 <= h_check < n and 0 <= w_check < n:
+            if board[h][w] == board[h_check][w_check]:
+                count += 1
+    
+    return count
