@@ -9,19 +9,19 @@ def solution(weights):
     for w in weights:
         weights_dict[w] += 1
         
-    # 중복 조합 제거를 위한 세트
-    unique_weights = sorted(weights_dict.keys())
-    
-    for i in range(len(unique_weights)):
-        w1 = unique_weights[i]
-        for j in range(i, len(unique_weights)):
-            w2 = unique_weights[j]
-            if w1 == w2:
-                answer += weights_dict[w1] * (weights_dict[w1] - 1) // 2
-            else:
-                if w1 * 2 == w2 or w1 * 3 == w2 * 2 or w1 * 4 == w2 * 3:
-                    answer += weights_dict[w1] * weights_dict[w2]
         
-    
+    for w in weights_dict:
+        # 동일한 무게 쌍
+        if weights_dict[w] > 1:
+            answer += weights_dict[w] * (weights_dict[w] - 1) // 2
+
+        if w * 2 / 3 in weights_dict:
+            answer += weights_dict[w] * weights_dict[w * 2 / 3]
+        
+        if w / 2 in weights_dict:
+            answer += weights_dict[w] * weights_dict[w / 2]
+        
+        if w * 3 / 4 in weights_dict:
+            answer += weights_dict[w] * weights_dict[w * 3 / 4]
     
     return answer
