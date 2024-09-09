@@ -1,20 +1,17 @@
 import sys
-from queue import PriorityQueue
+import heapq
+
 input = sys.stdin.readline
-print = sys.stdout.write
-
 n = int(input())
-queue = PriorityQueue()
+heap = []
 
-for i in range(n):
-    req = int(input())
-    
-    if req == 0:
-        if queue.empty():
-            print('0\n')
-        else:
-            temp = queue.get()
-            print(str((temp[1])) + '\n')
+for _ in range(n):
+    x = int(input())
+
+    if x != 0: # 0이면 출력
+        heapq.heappush(heap, (abs(x), x))  # 절댓값, 원래값 저장
     else:
-        # 절댓값을 기준으로 정렬하고 같으면 음수 우선 정렬하도록 구성
-        queue.put((abs(req), req))
+        if heap:
+            print(heapq.heappop(heap)[1]) # 절댓값이 가장 작은값 제거 및 출력
+        else:
+            print(0)
