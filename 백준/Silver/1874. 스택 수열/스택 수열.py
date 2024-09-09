@@ -2,27 +2,25 @@ import sys
 input = sys.stdin.readline
 
 n = int(input())
-arr = [int(input()) for i in range(n)]
+arr = [int(input()) for _ in range(n)]
 
-stack, ans = [], []
-find = True
-now = 1
+stack = []
+result = []
+current = 1
 
-for i in range(n):
-    num = arr[i]
+for a in arr:
+    # 현재 수보다 num이 더 크면 그 수까지 push 연산
+    while current <= a:
+        stack.append(current)
+        result.append("+")
+        current += 1
 
-    while now <= num:
-        stack.append(now)
-        ans.append('+')
-        now += 1
-
-    if stack[-1] == num:
+    # 스택의 최상단이 num인 경우, pop 연산 수행
+    if stack[-1] == a:
         stack.pop()
-        ans.append('-')
+        result.append("-")
     else:
-        find = False
-
-if not find:
-    print('NO')
-else:
-    print('\n'.join(ans))
+        print("NO")
+        break
+else: # for 루프가 끝까지 실행되었을 때 else 블록 실행
+    print("\n".join(result))
