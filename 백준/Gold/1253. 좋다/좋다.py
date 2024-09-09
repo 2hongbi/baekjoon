@@ -1,26 +1,32 @@
 n = int(input())
-nums = sorted(map(int, input().split()))
 
-answer = 0
+numbers = list(map(int, input().split()))
+numbers.sort()
 
+good_count = 0
 
-def two_pointer(li, target):
-    global answer
+for i in range(n):
+    target = numbers[i]
 
-    start, end = 0, len(li) - 1
-
+    start, end = 0, n-1
     while start < end:
-        s = li[start] + li[end]
-        if target == s:
-            answer += 1
-            return
-        elif target > s:
+        # 자기 자신은 포함하면 안됨
+        if start == i:
             start += 1
-        elif target < s:
+            continue
+        if end == i:
+            end -= 1
+            continue
+
+        total = numbers[start] + numbers[end]
+
+        if total == target:
+            good_count += 1
+            break
+        elif total < target:
+            start += 1
+        else:
             end -= 1
 
 
-for i in range(n):
-    two_pointer(nums[:i] + nums[i+1:], nums[i])
-
-print(answer)
+print(good_count)
