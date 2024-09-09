@@ -1,19 +1,16 @@
-import sys
-input = sys.stdin.readline
-
 n = int(input())
-ans = [0] * n
+a = list(map(int, input().split()))
 
-A = list(map(int, input().split()))
 stack = []
+result = [-1] * n # 결과 저장 리스트, 초기값 -1 설정
 
 for i in range(n):
-    while stack and A[stack[-1]] < A[i]:
-        # 스택이 비어있지 않고 현재 수열이 스택 top 인덱스가 가리키는 수열보다 큰 경우
-        ans[stack.pop()] = A[i]  # 정답 리스트에 오큰수를 현재 수열로 저장하기
+    # 현재 원소가 스택의 top에 해당하는 원소보다 크면 오큰수 찾음
+    while stack and a[stack[-1]] < a[i]:
+        index = stack.pop()
+        result[index] = a[i]
+
+    # 현재 원소의 인덱스를 스택에 저장
     stack.append(i)
 
-while stack:    # 반복문을 다 돌고 나왔는데 스택이 비어있지 않다면 빌 때까지
-    ans[stack.pop()] = -1   # 스택에 쌓인 index에 -1 넣기
-
-print(' '.join(list(map(str, ans))))
+print(' '.join(map(str, result)))
