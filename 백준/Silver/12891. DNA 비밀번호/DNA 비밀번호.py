@@ -1,48 +1,33 @@
-import sys
-input = sys.stdin.readline
-s, p = map(int, input().split())  # 임의, 비번
-dna_string = list(input().rstrip())
-dna = [0, 0, 0, 0]
-min_num = list(map(int, input().split()))  # A, C, G ,T
-start, end = 0, p
-count = 0
+from collections import Counter
+
+s, p = map(int, input().split()) # dna 문자열 길이, 비밀번호로 사용할 부분문자열의 길이
+dna_string = input()
+min_count = list(map(int, input().split())) # 부분 문자열에 포함되어야 할 A, C, G, T의 최소 개수
+
+# 현재 윈도우 내의 각 문자 빈도수 카운터
+current_count = Counter(dna_string[:p])
+
+def is_valid():
+    return (current_count['A'] >= min_count[0] and
+            current_count['C'] >= min_count[1] and
+            current_count['G'] >= min_count[2] and
+            current_count['T'] >= min_count[3])
 
 
-def dna_count(start, end):
-    global count,DNA
-    for i in range(start, end):
-        if dna_string[i] == 'A':
-            dna[0] += 1
-        elif dna_string[i] == 'C':
-            dna[1] += 1
-        elif dna_string[i] == 'G':
-            dna[2] += 1
-        else:
-            dna[3] += 1
-    if (dna[0] >= min_num[0]) and (dna[1] >= min_num[1]) and (dna[2] >= min_num[2]) and (dna[3] >= min_num[3]):
-        count += 1
+valid_password = 0
+# 첫 번째 윈도우 검사
+if is_valid():
+    valid_password += 1
 
+for i in range(1, s - p + 1):
+    prev_char = dna_string[i - 1]
+    current_count[prev_char] -= 1
 
-dna_count(start, end)
-for i in range(end, s):
-    if dna_string[i] == 'A':
-        dna[0] += 1
-    elif dna_string[i] == 'C':
-        dna[1] += 1
-    elif dna_string[i] == 'G':
-        dna[2] += 1
-    elif dna_string[i] == 'T':
-        dna[3] += 1
+    # 새문자 추가
+    new_char = dna_string[i + p - 1]
+    current_count[new_char] += 1
 
-    if dna_string[i-p] == 'A':
-        dna[0] -= 1
-    elif dna_string[i-p] == 'C':
-        dna[1] -= 1
-    elif dna_string[i-p] == 'G':
-        dna[2] -= 1
-    elif dna_string[i-p] == 'T':
-        dna[3] -= 1
-    if (dna[0] >= min_num[0]) and (dna[1] >= min_num[1]) and (dna[2] >= min_num[2]) and (dna[3] >= min_num[3]):
-        count += 1
+    if is_valid():
+        valid_password += 1
 
-print(count)
+print(valid_password)
