@@ -1,20 +1,23 @@
 import sys
+
 input = sys.stdin.readline
 
 n = int(input())
-stack = []
+
+queue = []
 
 for _ in range(n):
-    order = input().split()
-    if order[0] == 'push':
-        stack.append(order[1])
-    elif order[0] == 'pop':
-        print(stack.pop(0)) if stack else print(-1)
-    elif order[0] == 'size':
-        print(len(stack))
-    elif order[0] == 'empty':
-        print(0) if stack else print(1)
-    elif order[0] == 'front':
-        print(stack[0]) if stack else print(-1)
-    elif order[0] == 'back':
-        print(stack[-1]) if stack else print(-1)
+    cmd = input().split()
+
+    if cmd[0] == 'push':
+        queue.append(cmd[1])
+    elif cmd[0] == 'pop':
+        print(queue.pop(0)) if queue else print(-1)
+    elif cmd[0] == 'size':
+        print(len(queue))
+    elif cmd[0] == 'empty':
+        print(0) if queue else print(1)
+    elif cmd[0] == 'front':
+        print(queue[0]) if queue else print(-1)
+    elif cmd[0] == 'back':
+        print(queue[-1]) if queue else print(-1)
