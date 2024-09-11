@@ -3,10 +3,11 @@ pi = list(map(int, input().split()))
 
 pi.sort()
 
-ans, tmp = pi[0], pi[0]
+prev_time = pi[0]
+total_time = pi[0]
 
 for i in range(1, n):
-    tmp += pi[i]
-    ans += tmp
+    prev_time = pi[i] + prev_time
+    total_time += prev_time
 
-print(ans)
+print(total_time)
