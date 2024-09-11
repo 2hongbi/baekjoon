@@ -2,12 +2,10 @@ import sys
 input = sys.stdin.readline
 
 n = int(input())
-arr = []
+words = set(input().strip() for _ in range(n))
 
-for _ in range(n):
-    arr.append(input().strip())
+# sort by length of words, then lexicographic
+sorted_words = sorted(words, key=lambda x: (len(x), x))
 
-arr = list(set(arr))
-arr.sort(key=lambda x: (len(x), x))
-
-print('\n'.join(arr))
+for word in sorted_words:
+    print(word)
