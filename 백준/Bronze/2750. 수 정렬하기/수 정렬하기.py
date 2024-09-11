@@ -1,9 +1,14 @@
 import sys
 input = sys.stdin.readline
 
-N = int(input())
-arr = [int(input()) for _ in range(N)]
-arr.sort()
+n = int(input())
+numbers = [int(input()) for _ in range(n)]
 
-for i in arr:
-    print(i)
+for i in range(n):
+    for j in range(i, n):
+        if numbers[i] > numbers[j]:
+            numbers[i], numbers[j] = numbers[j], numbers[i]
+
+
+for i in range(n):
+    print(numbers[i])
