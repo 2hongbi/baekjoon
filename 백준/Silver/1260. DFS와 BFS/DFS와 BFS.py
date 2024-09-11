@@ -1,4 +1,6 @@
+import sys
 from collections import deque
+input = sys.stdin.readline
 
 n, m, v = map(int, input().split())
 
@@ -9,36 +11,32 @@ for _ in range(m):
     graph[s].append(e)
     graph[e].append(s)
 
-# 방문할 수 있는 정점이 여러 개인 경우 정점 번호가 작은 것을 먼저 방문
-for i in range(n + 1):
-    graph[i].sort()
+for g in graph:
+    g.sort()  # 정점 번호가 작은 것부터 방문하기 위해서
 
+def dfs(v, visited):
+    visited[v] = True
+    print(v, end=' ')
+    for g in graph[v]:
+        if not visited[g]:
+            dfs(g, visited)
 
-visited = [False] * (n + 1)
-def dfs(node):
-    print(node, end=' ')
-    visited[node] = True
-    for next_node in graph[node]:
-        if not visited[next_node]:
-            dfs(next_node)
-            visited[next_node] = True
-dfs(v)
-
-print()
-
-visited = [False] * (n + 1)
-def bfs(node):
-    queue = deque([node])
-    visited[node] = True
+def bfs(v):
+    visited = [False] * (n + 1)
+    queue = deque([v])
+    visited[v] = True
 
     while queue:
-        curr_node = queue.popleft()
-        print(curr_node, end=' ')
-        visited[curr_node] = True
+        current = queue.popleft()
+        print(current, end=' ')
 
-        for next_node in graph[curr_node]:
-            if not visited[next_node]:
-                queue.append(next_node)
-                visited[next_node] = True
+        for g in graph[current]:
+            if not visited[g]:
+                queue.append(g)
+                visited[g] = True
 
+
+visited = [False] * (n + 1)
+dfs(v, visited)
+print()
 bfs(v)
