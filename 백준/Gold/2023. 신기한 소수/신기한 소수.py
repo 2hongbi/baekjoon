@@ -1,27 +1,29 @@
 import sys
-sys.setrecursionlimit(10000)
+sys.setrecursionlimit(10**6)
+
 input = sys.stdin.readline
 
 n = int(input())
 
 def is_prime(x):
-    if x == 1:
+    # 소수 판별 함수
+    if x < 2:
         return False
-    for i in range(2, int(x ** 0.5) + 1):
+    for i in range(2, int(x**0.5) + 1):
         if x % i == 0:
             return False
     return True
 
-def dfs(x):
-    if len(str(x)) == n:
-        print(x)
-    else:
-        for i in range(10):
-            next_num = x * 10 + i
-            if is_prime(next_num):
-                dfs(next_num)
+def dfs(number):
+    if len(str(number)) == n:
+        print(number)
+        return
 
-dfs(2)
-dfs(3)
-dfs(5)
-dfs(7)
+    for digit in range(1, 10, 2):
+        new_number = number * 10 + digit
+        if is_prime(new_number):
+            dfs(new_number)
+
+
+for i in [2, 3, 5, 7]:
+    dfs(i)
