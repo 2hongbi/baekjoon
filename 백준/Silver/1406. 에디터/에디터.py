@@ -1,19 +1,25 @@
 import sys
+input = sys.stdin.readline
 
-stack_l = list(input())
-stack_r = []
-n = int(input())
+left_stack = list(input().strip())  # 커서 왼쪽의 문자들
+right_stack = [] # 커서 오른쪽의 문자들
 
-for i in range(n):
-    cmd = sys.stdin.readline().split()
+m = int(input())
 
-    if cmd[0] == 'L' and stack_l:
-        stack_r.append(stack_l.pop())
-    elif cmd[0] == 'D' and stack_r:
-        stack_l.append(stack_r.pop())
-    elif cmd[0] == 'B' and stack_l:
-        stack_l.pop()
-    elif cmd[0] == 'P':
-        stack_l.append(cmd[1])
+for _ in range(m):
+    cmd = input().split()
 
-print(''.join(stack_l + list(reversed(stack_r))))
+    if cmd[0] == "L":
+        if left_stack:
+            right_stack.append(left_stack.pop())
+    elif cmd[0] == "D":
+        if right_stack:
+            left_stack.append(right_stack.pop())
+    elif cmd[0] == "B": # 커서 왼쪽에 있는 문자 삭제
+        if left_stack:
+            left_stack.pop()
+    elif cmd[0] == "P":
+        left_stack.append(cmd[1])
+
+
+print("".join(left_stack + right_stack[::-1]))
