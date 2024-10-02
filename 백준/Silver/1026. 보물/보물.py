@@ -2,13 +2,14 @@ import sys
 input = sys.stdin.readline
 
 n = int(input())
-A = list(map(int, input().split()))
-B = list(map(int, input().split()))
-A.sort()
-B.sort(reverse=True)
+a = list(map(int, input().split()))
+b = list(map(int, input().split()))
 
-ans = 0
-for i in range(n):
-    ans += A[i] * B[i]
+a.sort()
+b.sort(reverse=True)
 
-print(ans)
+s = 0
+for aa, bb in zip(a, b):
+    s += aa * bb
+
+print(s)
