@@ -1,47 +1,39 @@
 import sys
 from collections import deque
-sys.setrecursionlimit(100000)
 input = sys.stdin.readline
 
-# 상 우 하 좌
-dx = [-1, 1, 0, 0]
-dy = [0, 0, -1, 1]
+n = int(input())
+graph = [list(map(int, input().split())) for _ in range(n)]
 
-N = int(input())
-graph = [list(map(int, input().split())) for _ in range(N)]
+dxs, dys = [1, -1, 0, 0], [0, 0, 1, -1]
+def bfs(x, y, height, visited):
+    queue = deque([(x, y)])
+    visited[x][y] = True
 
-cur_max = 0
-for i in range(N):
-    for j in range(N):
-        cur_max = max(cur_max, graph[i][j])
+    while queue:
+        x, y = queue.popleft()
+
+        for dx, dy in zip(dxs, dys):
+            nx, ny = x + dx, y + dy
+            if 0 <= nx < n and 0 <= ny < n and not visited[nx][ny] and graph[nx][ny] > height:
+                visited[nx][ny] = True
+                queue.append((nx, ny))
 
 
-def bfs(x,y,k):
-    cnt = 1
-    q = deque()
-    q.append((x,y))
-    while q:
-        x, y = q.popleft()
-        visited[x][y] = 1
-        for i in range(4):
-            nx, ny = dx[i]+x, dy[i]+y
-            if 0 <= nx < N and 0 <= ny < N:
-                if graph[nx][ny] > k and visited[nx][ny] == 0:
-                    q.append((nx, ny))
-                    cnt += 1
-                    visited[nx][ny] = 1
 
-    return cnt
+max_safe_areas = 0
+max_height = max(max(row) for row in graph)
 
-res = 0
-for k in range(cur_max+1):
-    visited = [[0]*N for _ in range(N)]
-    res_cnt = []
-    for i in range(N):
-        for j in range(N):
-            if graph[i][j]>k and visited[i][j] == 0:
-                res_cnt.append(bfs(i, j, k))
-                cnt = 0
-    res = max(res, len(res_cnt))
+for height in range(max_height + 1):
+    visited = [[False] * n for _ in range(n)]
+    safe_area_count = 0
 
-print(res)
+    for i in range(n):
+        for j in range(n):
+            if graph[i][j] > height and not visited[i][j]:
+                bfs(i, j, height, visited)
+                safe_area_count += 1
+
+    max_safe_areas = max(safe_area_count, max_safe_areas)
+
+print(max_safe_areas)
