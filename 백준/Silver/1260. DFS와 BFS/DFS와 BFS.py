@@ -7,19 +7,22 @@ n, m, v = map(int, input().split())
 graph = [[] for _ in range(n + 1)]
 
 for _ in range(m):
-    s, e = map(int, input().split())
-    graph[s].append(e)
-    graph[e].append(s)
+    a, b = map(int, input().split())
+    graph[a].append(b)
+    graph[b].append(a)
 
 for g in graph:
-    g.sort()  # 정점 번호가 작은 것부터 방문하기 위해서
+    g.sort()
+
 
 def dfs(v, visited):
     visited[v] = True
     print(v, end=' ')
+
     for g in graph[v]:
         if not visited[g]:
             dfs(g, visited)
+
 
 def bfs(v):
     visited = [False] * (n + 1)
@@ -27,13 +30,12 @@ def bfs(v):
     visited[v] = True
 
     while queue:
-        current = queue.popleft()
-        print(current, end=' ')
-
-        for g in graph[current]:
+        g = queue.popleft()
+        print(g, end=' ')
+        for g in graph[g]:
             if not visited[g]:
-                queue.append(g)
                 visited[g] = True
+                queue.append(g)
 
 
 visited = [False] * (n + 1)
