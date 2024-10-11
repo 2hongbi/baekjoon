@@ -1,33 +1,30 @@
 import sys
-
+from itertools import combinations
 input = sys.stdin.readline
 
-N = int(input())
-people = [list(map(int, input().split())) for _ in range(N)]
-visited = [False for _ in range(N)]
-min_diff = int(1e9) # 가능한 최댓값이 10억 미만이라면 무한(INF)의 값으로 1e9를 이용할 수 있음(1 * 10^9), 2e9는 무한대 값 표시
+n = int(input())
+s = [list(map(int, input().split())) for _ in range(n)]
 
+min_diff = float('inf')
 
-def dfs(depth, idx):
-    global min_diff
-    if depth == N // 2:
-        power1, power2 = 0, 0
-        for i in range(N):
-            for j in range(N):
-                if visited[i] and visited[j]:   # 방문처리 -> 스타스팀
-                    power1 += people[i][j]
-                elif not visited[i] and not visited[j]: # 방문처리 X -> 링크팀
-                    power2 += people[i][j]
-        min_diff = min(min_diff, abs(power1 - power2))
-        return
+people = [i for i in range(n)]
+for start_team in combinations(people, n // 2):
+    # print(start_team)
+    link_team = [i for i in people if i not in start_team]
 
-    for i in range(idx, N):
-        if not visited[i]:
-            visited[i] = True
-            dfs(depth+1, i+1)
-            visited[i] = False
+    start_score = 0
+    for i in start_team:
+        for j in start_team:
+            if i != j:
+                start_score += s[i][j]
 
+    link_score = 0
+    for i in link_team:
+        for j in link_team:
+            if i != j:
+                link_score += s[i][j]
 
-dfs(0, 0)
+    diff = abs(start_score - link_score)
+    min_diff = min(min_diff, diff)
+
 print(min_diff)
-
