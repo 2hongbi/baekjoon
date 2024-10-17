@@ -1,32 +1,28 @@
 from collections import deque
-import sys
 
-input = sys.stdin.readline
-
-# 건물 층수, 강호의 위치, 회사의 위치
 f, s, g, u, d = map(int, input().split())
-visited = [0] * (f + 1)
-visited[s] = 1
 
 
-def bfs():
-    q = deque([s])
-    while q:
-        x = q.popleft()
-        if x == g:
-            print(visited[g] - 1)
-            return
+def bfs(start):
+    visited = [False] * (f + 1)
+    queue = deque([(start, 0)])  # 현재 층, 버튼 누른 횟수
+    visited[start] = True
 
-        up = x + u
-        down = x - d
-        if up <= f and not visited[up]:
-            q.append(up)
-            visited[up] = visited[x] + 1
-        if 0 < down and not visited[down]:
-            q.append(down)
-            visited[down] = visited[x] + 1
-    else:
-        print('use the stairs')
-        return
+    while queue:
+        curr, cnt = queue.popleft()
 
-bfs()
+        if curr == g:
+            return cnt
+
+        if curr + u <= f and not visited[curr + u]:
+            visited[curr + u] = True
+            queue.append((curr + u, cnt + 1))
+
+        if curr - d >= 1 and not visited[curr - d]:
+            visited[curr - d] = True
+            queue.append((curr - d, cnt + 1))
+
+    return "use the stairs"
+
+
+print(bfs(s))
